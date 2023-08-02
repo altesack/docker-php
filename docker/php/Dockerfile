@@ -1,7 +1,4 @@
-FROM php:8.0.0rc1-fpm
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y git
+FROM php:8.2-fpm-alpine
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql

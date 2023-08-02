@@ -3,7 +3,7 @@ services:
 
     # PHP service
     app:
-        build: .
+        build: ./docker/php
         container_name: php-app
         working_dir: /var/www/
         volumes:
@@ -35,7 +35,7 @@ services:
             - 8000:80
         volumes:
             - ./:/var/www
-            - ./nginx/conf.d/:/etc/nginx/conf.d/
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
         networks:
             - app-network
 

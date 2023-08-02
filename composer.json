@@ -1,0 +1,7 @@
+{
+    "name": "altesack/docker-php",
+    "description": "Stub description. To be changed",
+    "type": "project",
+    "license": "MIT",
+    "require": {}
+}

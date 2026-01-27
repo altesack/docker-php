@@ -1,4 +1,4 @@
 when@dev:
     _errors:
-        resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+        resource: '%kernel.project_dir%/vendor/symfony/framework-bundle/Resources/config/routing/errors.xml'
         prefix: /_error

@@ -1,5 +1,5 @@
 when@dev:
     _errors:
         resource: "@FrameworkBundle/Controller/"
-        type: annotation
+        type: attribute
         prefix: /_error

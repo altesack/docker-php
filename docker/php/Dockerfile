@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.5-fpm-alpine
 
 # Install PHP extensions
 RUN apk add icu-dev bash

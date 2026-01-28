@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  checks:
+    name: Run checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and start containers
+        run: docker compose up -d --build
+
+      - name: Wait for services
+        run: sleep 5
+
+      - name: Composer install
+        run: docker compose exec app composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+      - name: Run PHPUnit
+        run: docker compose exec app ./vendor/bin/phpunit --no-progress --colors=never
+
+      - name: Run PHPStan
+        run: docker compose exec app ./vendor/bin/phpstan analyse src tests --level=max --no-progress
+
+      - name: Run ECS
+        run: docker compose exec app ./vendor/bin/ecs --fix
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down --remove-orphans

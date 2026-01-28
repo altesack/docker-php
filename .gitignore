@@ -11,3 +11,5 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+/.phpunit.cache/
+/.phpunit.result.cache

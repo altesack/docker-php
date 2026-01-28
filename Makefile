@@ -1,5 +1,5 @@
 # Executables (local)
-DOCKER_COMP = docker-compose
+DOCKER_COMP = docker compose
 
 # Docker containers
 PHP_CONT = $(DOCKER_COMP) exec app
@@ -34,6 +34,19 @@ logs: ## Show live logs
 
 bash: ## Connect to the PHP FPM container
 	@$(PHP_CONT) bash
+
+phpunit:
+	@$(PHP_CONT) ./vendor/bin/phpunit --no-progress --colors=never
+
+phpstan:
+	@$(PHP_CONT) ./vendor/bin/phpstan analyse src tests --level=max --no-progress
+
+ecs-fix:
+	@$(PHP_CONT) ./vendor/bin/ecs --fix
+
+ecs:
+	@$(PHP_CONT) ./vendor/bin/ecs
+
 
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'

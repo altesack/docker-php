@@ -21,14 +21,17 @@ jobs:
       - name: Wait for services
         run: sleep 5
 
+      - name: Composer install
+        run: docker compose exec app composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
       - name: Run PHPUnit
-        run: make phpunit
+        run: docker compose exec app ./vendor/bin/phpunit --no-progress --colors=never
 
       - name: Run PHPStan
-        run: make phpstan
+        run: docker compose exec app ./vendor/bin/phpstan analyse src tests --level=max --no-progress
 
       - name: Run ECS
-        run: make ecs
+        run: docker compose exec app ./vendor/bin/ecs --fix
 
       - name: Stop containers
         if: always()

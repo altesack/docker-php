@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  checks:
+    name: Run checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and start containers
+        run: docker-compose up -d --build
+
+      - name: Wait for services
+        run: sleep 5
+
+      - name: Run PHPUnit
+        run: make phpunit
+
+      - name: Run PHPStan
+        run: make phpstan
+
+      - name: Run ECS
+        run: make ecs
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose down --remove-orphans
